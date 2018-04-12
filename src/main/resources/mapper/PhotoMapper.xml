@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jbj.mapper.PhotoMapper">
+
+    <resultMap type="com.jbj.bean.Photo" id="Base_ResultMap">
+
+        <id column="p_id" property="pId" jdbcType="INTEGER"/>
+        <result column="p_type" property="pType" jdbcType="VARCHAR"/>
+        <result column="p_city" property="pCity" jdbcType="VARCHAR"/>
+        <result column="p_b_id" property="pbId" jdbcType="VARCHAR"/>
+        <result column="p_household" property="pHousehold" jdbcType="VARCHAR"/>
+        <result column="p_unit" property="pUnit" jdbcType="VARCHAR"/>
+        <result column="p_floor" property="pFloor" jdbcType="VARCHAR"/>
+        <result column="p_door_model" property="pDoorModel" jdbcType="VARCHAR"/>
+        <result column="p_wall" property="pWall" jdbcType="VARCHAR"/>
+        <result column="p_note1" property="pNote1" jdbcType="VARCHAR"/>
+        <result column="p_note2" property="pNote2" jdbcType="VARCHAR"/>
+        <result column="p_note3" property="pNote3" jdbcType="VARCHAR"/>
+        <result column="p_points" property="pPoints" jdbcType="VARCHAR"/>
+        <result column="p_measurement" property="pMeasurement" jdbcType="VARCHAR"/>
+        <result column="p_lable" property="pLable" jdbcType="VARCHAR"/>
+        <result column="p_photo" property="pPhoto" jdbcType="VARCHAR"/>
+        <result column="p_address" property="pAddress" jdbcType="VARCHAR"/>
+        <result column="p_time" property="pTime"/>
+        <association property="build" javaType="com.jbj.bean.Build">
+            <id column="id" property="id" jdbcType="INTEGER"/>
+            <result column="buildname" property="buildName" jdbcType="VARCHAR"/>
+            <result column="dvpcompany" property="dvpcompany" jdbcType="VARCHAR"/>
+            <result column="province" property="province" jdbcType="VARCHAR"/>
+            <result column="city" property="city" jdbcType="VARCHAR"/>
+            <result column="area" property="area" jdbcType="VARCHAR"/>
+            <result column="designcompany" property="designcompany" jdbcType="VARCHAR"/>
+            <result column="sightcompany" property="sightcompany" jdbcType="VARCHAR"/>
+            <result column="pmcompany" property="pmcompany" jdbcType="VARCHAR"/>
+            <result column="sg" property="sg" jdbcType="VARCHAR"/>
+            <result column="ischoice" property="ischoice" jdbcType="VARCHAR"/>
+            <result column="delivery" property="delivery" jdbcType="VARCHAR"/>
+            <result column="periods" property="periods" jdbcType="VARCHAR"/>
+            <result column="buildingnm" property="buildingnm" jdbcType="VARCHAR"/>
+            <result column="taskstatus" property="taskStatus" jdbcType="VARCHAR"/>
+            <result column="buildtime" property="buildTime"/>
+        </association>
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+  	  p.p_id,p.p_type,p.p_city,p.p_b_id,p.p_household,p.p_unit,p.p_floor,p.p_door_model,p.p_wall,p.p_note1,p.p_note2,p.p_note3,p.p_points,p.p_measurement,
+  	  p.p_lable,p.p_photo,p.p_address,p.p_time,
+  	  b.id,b.buildname,b.dvpcompany,b.province,b.city,b.area,b.designcompany,b.sightcompany,b.pmcompany,b.sg,b.ischoice,b.delivery,b.periods,b.buildingnm,b.taskstatus,b.buildtime
+  </sql>
+
+    <insert id="savePhoto" parameterType="com.jbj.bean.Photo">
+        insert into photo(p_id,p_type,p_city,p_b_id,p_household,p_unit,p_floor,p_door_model,p_wall,p_note1,p_note2,p_note3,p_points,p_measurement,
+  	  p_lable,p_photo,p_address,p_time)
+  	  values(#{pId},#{pType},#{pCity},#{pbId},#{pHousehold},#{pUnit},#{pFloor},#{pDoorModel},#{pWall},#{pNote1},#{pNote2},#{pNote3},#{pPoints},#{pMeasurement},
+  	  #{pLable},#{pPhoto},#{pAddress},#{pTime})
+    </insert>
+
+
+
+</mapper>

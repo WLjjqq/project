@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jbj.mapper.UserMapper">
+
+    <resultMap type="com.jbj.bean.User" id="Base_ResultMap">
+        <id column="uid" property="uId" jdbcType="INTEGER"/>
+        <result column="username" property="userName" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <association property="role" javaType="com.jbj.bean.Role">
+            <id column="sid" property="sId" jdbcType="INTEGER"/>
+            <result column="rname" property="rName" jdbcType="VARCHAR"/>
+        </association>
+    </resultMap>
+    <sql id="Base_Column_List">
+  	  u.uid,u.username,u.password,r.sid,r.rname
+  </sql>
+
+    <select id="check" parameterType="map" resultMap="Base_ResultMap" >
+        select
+        <include refid="Base_Column_List"/>
+        from `us-ro` ur
+        INNER JOIN `user` u
+        on ur.uid=u.uid
+        INNER JOIN role r
+        on ur.sid=r.sid
+        where u.username=#{name}
+        and u.password=#{password}
+    </select>
+</mapper>
