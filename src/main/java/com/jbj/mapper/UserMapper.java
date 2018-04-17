@@ -11,5 +11,5 @@ public interface UserMapper {
  *
  *
  */
-public User check(Map<String, String> map);
+ User check(Map<String, Object> map);
 }

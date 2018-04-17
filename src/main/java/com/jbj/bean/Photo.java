@@ -1,6 +1,9 @@
 package com.jbj.bean;
 
-import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.sql.Date;
 
 public class Photo {
 	private Integer pId;
@@ -21,6 +24,7 @@ public class Photo {
 	private String pLable;
 	private String pPhoto;
 	private String pAddress;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date pTime;
 	private Build build;
 
