@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jbj.mapper.BuildMapper">
+
+    <resultMap type="com.jbj.bean.Build" id="Base_ResultMap">
+            <id column="id" property="id" jdbcType="INTEGER"/>
+            <result column="buildname" property="buildName" jdbcType="VARCHAR"/>
+            <result column="dvpcompany" property="dvpcompany" jdbcType="VARCHAR"/>
+            <result column="province" property="province" jdbcType="VARCHAR"/>
+            <result column="city" property="city" jdbcType="VARCHAR"/>
+            <result column="area" property="area" jdbcType="VARCHAR"/>
+            <result column="designcompany" property="designcompany" jdbcType="VARCHAR"/>
+            <result column="sightcompany" property="sightcompany" jdbcType="VARCHAR"/>
+            <result column="pmcompany" property="pmcompany" jdbcType="VARCHAR"/>
+            <result column="sg" property="sg" jdbcType="VARCHAR"/>
+            <result column="ischoice" property="ischoice" jdbcType="VARCHAR"/>
+            <result column="delivery" property="delivery" jdbcType="VARCHAR"/>
+            <result column="periods" property="periods" jdbcType="VARCHAR"/>
+            <result column="buildingnm" property="buildingnm" jdbcType="VARCHAR"/>
+            <result column="taskstatus" property="taskStatus" jdbcType="VARCHAR"/>
+            <result column="buildtime" property="buildTime"/>
+    </resultMap>
+
+
+    <select id="queryCity" resultType="java.lang.String">
+       SELECT DISTINCT b.city
+        from buildinfo b
+    </select>
+
+
+</mapper>

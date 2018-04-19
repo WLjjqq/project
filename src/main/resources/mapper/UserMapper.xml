@@ -15,7 +15,7 @@
   	  u.uid,u.username,u.password,r.sid,r.rname
   </sql>
 
-    <select id="check" parameterType="map" resultMap="Base_ResultMap" >
+    <select id="check" parameterType="java.lang.String" resultMap="Base_ResultMap" >
         select
         <include refid="Base_Column_List"/>
         from `us-ro` ur
@@ -23,7 +23,7 @@
         on ur.uid=u.uid
         INNER JOIN role r
         on ur.sid=r.sid
-        where u.username=#{name}
-        and u.password=#{password}
+        where u.username=#{userName,jdbcType=VARCHAR}
     </select>
+
 </mapper>

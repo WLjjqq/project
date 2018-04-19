@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jbj.mapper.VersionMapper">
+
+    <resultMap type="com.jbj.bean.Version" id="Base_ResultMap">
+            <id column="v_id" property="vId" jdbcType="INTEGER"/>
+            <result column="version_new" property="versionNew" jdbcType="VARCHAR"/>
+            <result column="version_url" property="versionUrl" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <select id="getVersion"  resultMap="Base_ResultMap">
+       select v_id,version_new,version_url from version
+        ORDER BY version_new DESC LIMIT 1
+    </select>
+
+
+</mapper>

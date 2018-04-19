@@ -3,7 +3,6 @@
 <mapper namespace="com.jbj.mapper.PhotoMapper">
 
     <resultMap type="com.jbj.bean.Photo" id="Base_ResultMap">
-
         <id column="p_id" property="pId" jdbcType="INTEGER"/>
         <result column="p_type" property="pType" jdbcType="VARCHAR"/>
         <result column="p_city" property="pCity" jdbcType="VARCHAR"/>
@@ -21,7 +20,7 @@
         <result column="p_lable" property="pLable" jdbcType="VARCHAR"/>
         <result column="p_photo" property="pPhoto" jdbcType="VARCHAR"/>
         <result column="p_address" property="pAddress" jdbcType="VARCHAR"/>
-        <result column="p_time" property="pTime"/>
+        <result column="p_time" property="pTime" jdbcType="DATE"/>
         <association property="build" javaType="com.jbj.bean.Build">
             <id column="id" property="id" jdbcType="INTEGER"/>
             <result column="buildname" property="buildName" jdbcType="VARCHAR"/>
@@ -49,13 +48,93 @@
   	  b.id,b.buildname,b.dvpcompany,b.province,b.city,b.area,b.designcompany,b.sightcompany,b.pmcompany,b.sg,b.ischoice,b.delivery,b.periods,b.buildingnm,b.taskstatus,b.buildtime
   </sql>
 
-    <insert id="savePhoto" parameterType="com.jbj.bean.Photo">
-        insert into photo(p_id,p_type,p_city,p_b_id,p_household,p_unit,p_floor,p_door_model,p_wall,p_note1,p_note2,p_note3,p_points,p_measurement,
-  	  p_lable,p_photo,p_address,p_time)
-  	  values(#{pId},#{pType},#{pCity},#{pbId},#{pHousehold},#{pUnit},#{pFloor},#{pDoorModel},#{pWall},#{pNote1},#{pNote2},#{pNote3},#{pPoints},#{pMeasurement},
-  	  #{pLable},#{pPhoto},#{pAddress},#{pTime})
-    </insert>
+    <insert id="savePhoto" parameterType="com.jbj.bean.Photo" >
+        insert into photo
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="pId != null">p_id,</if>
+            <if test="pType != null">p_type,</if>
+            <if test="pCity != null">p_city,</if>
+            <if test="pbId != null">p_b_id,</if>
+            <if test="pHousehold != null">p_household,</if>
+            <if test="pUnit != null">p_unit,</if>
+            <if test="pFloor != null">p_floor,</if>
+            <if test="pDoorModel != null">p_door_model,</if>
+            <if test="pWall != null">p_wall,</if>
+            <if test="pNote1 != null">p_note1,</if>
+            <if test="pNote2 != null">p_note2,</if>
+            <if test="pNote3 != null">p_note3,</if>
+            <if test="pPoints != null">p_points,</if>
+            <if test="pMeasurement != null">p_measurement,</if>
+            <if test="pLable != null">p_lable,</if>
+            <if test="pPhoto != null">p_photo,</if>
+            <if test="pAddress != null">p_address,</if>
+            <if test="pTime != null">p_time</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="pId != null ">#{pId,jdbcType=INTEGER},</if>
+            <if test="pType != null">#{pType,jdbcType=VARCHAR},</if>
+            <if test="pCity != null">#{pCity,jdbcType=VARCHAR},</if>
+            <if test="pbId != null">#{pbId,jdbcType=INTEGER},</if>
+            <if test="pHousehold != null">#{pHousehold,jdbcType=VARCHAR},</if>
+            <if test="pUnit != null">#{pUnit,jdbcType=VARCHAR},</if>
+            <if test="pFloor != null">#{pFloor,jdbcType=VARCHAR},</if>
+            <if test="pDoorModel != null">#{pDoorModel,jdbcType=VARCHAR},</if>
+            <if test="pWall != null">#{pWall,jdbcType=VARCHAR},</if>
+            <if test="pNote1 != null">#{pNote1,jdbcType=VARCHAR},</if>
+            <if test="pNote2 != null">#{pNote2,jdbcType=VARCHAR},</if>
+            <if test="pNote3 != null">#{pNote3,jdbcType=VARCHAR},</if>
+            <if test="pPoints != null">#{pPoints,jdbcType=VARCHAR},</if>
+            <if test="pMeasurement != null">#{pMeasurement,jdbcType=VARCHAR},</if>
+            <if test="pLable != null">#{pLable,jdbcType=VARCHAR},</if>
+            <if test="pPhoto != null">#{pPhoto,jdbcType=VARCHAR},</if>
+            <if test="pAddress != null">#{pAddress,jdbcType=VARCHAR},</if>
+            <if test="pTime != null">#{pTime,jdbcType=DATE}</if>
+        </trim>
+</insert>
 
+
+  <select id="selectPhoto" parameterType="com.jbj.bean.Photo" resultType="java.lang.Integer">
+         select
+         count(p.p_id),b.buildname from photo p
+            inner join buildinfo b
+            on p.p_b_id =b.id
+            where
+            <if test="pbId !=null">
+                b.id=#{pbId,jdbcType=INTEGER}
+            </if>
+			and
+            <if test="pTime != null">date_format(p.p_time,'%Y-%m-%d')=#{pTime,jdbcType=DATE}</if>
+    </select>
+
+<!--查询上传记录-->
+    <resultMap type="java.util.HashMap" id="Base2_ResultMap">
+        <id column="p_id" property="pId" jdbcType="INTEGER"/>
+        <result column="p_type" property="pType" jdbcType="VARCHAR"/>
+        <result column="p_b_id" property="pbId" jdbcType="VARCHAR"/>
+        <result column="p_time" property="pTime" jdbcType="DATE"/>
+        <association property="build" javaType="java.util.HashMap">
+            <result column="buildname" property="buildName" jdbcType="VARCHAR"/>
+        </association>
+    </resultMap>
+    <select id="selectPhotoJilu" parameterType="com.jbj.bean.Photo" resultMap="Base2_ResultMap">
+        SELECT
+        b.buildname,
+        date_format(p.p_time,'%H:%m'),
+        p.p_type,
+        count(p.p_id)
+        FROM
+        photo p
+        INNER JOIN buildinfo b
+        on p.p_b_id=b.id
+        where
+        <if test="pTime != null">date_format(p.p_time,'%Y-%m-%d')=#{pTime,jdbcType=DATE}</if>
+        GROUP BY b.buildname
+    </select>
+
+    <select id="queryPhotoType" resultType="java.lang.String">
+        SELECT DISTINCT p.p_type
+        from photo p
+    </select>
 
 
 </mapper>
