@@ -6,8 +6,10 @@ import com.jbj.service.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
 import java.sql.Date;
+import java.util.List;
+import java.util.Map;
+
 @Service
 public class PhotoServiceImpl implements PhotoService {
 	@Autowired
@@ -21,16 +23,36 @@ public class PhotoServiceImpl implements PhotoService {
 			return -1;
 		}
 	}
+
 	//多个条件查询。传递要查询的条件作为参数，然后用对象去查询。
 	public int getPhoto(Integer id,Date date) {
 		Photo photo=new Photo();
 		photo.setPbId(id);
 		photo.setpTime(date);
-		System.out.println("Date转String后的值"+date);
 
-		int a=photoMapper.selectPhoto(photo);
-		return a;
-
-
+		int countPhoto=photoMapper.selectPhoto(photo);
+		if(countPhoto > 0){
+			return countPhoto;
+		}else{
+			return -1;
+		}
 	}
+	//查询类型
+	public Object getPhotoType() {
+		List<String> types=photoMapper.queryPhotoType();
+		if(types.size()>0){
+			return types;
+		}else{
+			return "数据库中没有照片类型";
+		}
+	}
+
+	public List<Map<String, Object>> getPhotoJilu(Date date) {
+		Photo photo=new Photo();
+		photo.setpTime(date);
+		List<Map<String, Object>> photos = photoMapper.selectPhotoJilu(photo);
+		return photos;
+	}
+
+	
 }

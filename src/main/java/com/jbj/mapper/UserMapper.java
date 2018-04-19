@@ -2,6 +2,7 @@ package com.jbj.mapper;
 
 import com.jbj.bean.User;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -11,5 +12,6 @@ public interface UserMapper {
  *
  *
  */
- User check(Map<String, Object> map);
+ User check(String userName);
+
 }

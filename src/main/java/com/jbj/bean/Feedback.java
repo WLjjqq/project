@@ -1,15 +1,17 @@
 package com.jbj.bean;
 
+import org.omg.PortableInterceptor.Interceptor;
+
 public class Feedback {
     private Integer fId;
-    private String fType;
+    private Integer fType;
     private String fDescribe;
     private String fImg;
 
     public Feedback() {
     }
 
-    public Feedback(Integer fId, String fType, String fDescribe, String fImg) {
+    public Feedback(Integer fId, Integer fType, String fDescribe, String fImg) {
         this.fId = fId;
         this.fType = fType;
         this.fDescribe = fDescribe;
@@ -24,11 +26,11 @@ public class Feedback {
         this.fId = fId;
     }
 
-    public String getfType() {
+    public Integer getfType() {
         return fType;
     }
 
-    public void setfType(String fType) {
+    public void setfType(Integer fType) {
         this.fType = fType;
     }
 

@@ -49,12 +49,25 @@ public static Msg fail(){
 	return result;
 }
 //登录失败
-public static Msg loginFailed(){
+public static Msg loginPasswordFailed(){
 	Msg result=new Msg();
 	result.setCode(500);
-	result.setMsg("登录失败，请检查用户名和密码的正确性");
+	result.setMsg("登录失败，密码不正确");
 	return result;
 }
+	public static Msg loginNameFailed(){
+		Msg result=new Msg();
+		result.setCode(500);
+		result.setMsg("登录失败，用户名不存在");
+		return result;
+	}
+
+	public static Msg loginNameFailed1(){
+		Msg result=new Msg();
+		result.setCode(400);
+		result.setMsg("登录失败，用户名不存在");
+		return result;
+	}
 
 //把返回的数据保存到map中
 public Msg add(String key,Object value){
