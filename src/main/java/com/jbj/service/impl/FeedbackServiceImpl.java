@@ -10,8 +10,13 @@ import org.springframework.stereotype.Service;
 public class FeedbackServiceImpl implements FeedbackService {
 
     @Autowired
-    //问题反馈保存
     private FeedbackMapper feedbackMapper;
+
+    /**
+     * 保存反馈问题
+     * @param feedback
+     * @return
+     */
     public Object saveFeedback(Feedback feedback) {
        int isTrue = feedbackMapper.saveFeedback(feedback);
         if(isTrue >0){

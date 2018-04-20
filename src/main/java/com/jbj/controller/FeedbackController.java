@@ -14,10 +14,14 @@ public class FeedbackController {
     @Autowired
     private FeedbackService feedbackService;
 
-    //问题反馈保存。
+    /**
+     * 问题反馈保存。
+     * @param feedback
+     * @return
+     */
     @RequestMapping(value = "/saveFeedback",method = RequestMethod.GET)
     @ResponseBody
     public Object saveFeedbackController(Feedback feedback){
-        return feedbackService.saveFeedback(feedback);
+            return feedbackService.saveFeedback(feedback);
     }
 }

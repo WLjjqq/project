@@ -7,11 +7,10 @@ import java.util.Map;
 
 
 public interface UserMapper {
-/**
- * 根据用户名查询数据库
- *
- *
- */
+ /**
+  * 根据用户名查询数据库
+  * @param userName
+  * @return
+  */
  User check(String userName);
-
 }

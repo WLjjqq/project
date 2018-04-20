@@ -41,13 +41,7 @@
         </association>
     </resultMap>
 
-
-    <sql id="Base_Column_List">
-  	  p.p_id,p.p_type,p.p_city,p.p_b_id,p.p_household,p.p_unit,p.p_floor,p.p_door_model,p.p_wall,p.p_note1,p.p_note2,p.p_note3,p.p_points,p.p_measurement,
-  	  p.p_lable,p.p_photo,p.p_address,p.p_time,
-  	  b.id,b.buildname,b.dvpcompany,b.province,b.city,b.area,b.designcompany,b.sightcompany,b.pmcompany,b.sg,b.ischoice,b.delivery,b.periods,b.buildingnm,b.taskstatus,b.buildtime
-  </sql>
-
+<!--保存图片-->
     <insert id="savePhoto" parameterType="com.jbj.bean.Photo" >
         insert into photo
         <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -92,7 +86,13 @@
         </trim>
 </insert>
 
+    <!--查询照片类型-->
+    <select id="queryPhotoType" resultType="java.lang.String">
+        SELECT DISTINCT p.p_type
+        from photo p
+    </select>
 
+<!--多条件查询-->
   <select id="selectPhoto" parameterType="com.jbj.bean.Photo" resultType="java.lang.Integer">
          select
          count(p.p_id),b.buildname from photo p
@@ -110,31 +110,59 @@
     <resultMap type="java.util.HashMap" id="Base2_ResultMap">
         <id column="p_id" property="pId" jdbcType="INTEGER"/>
         <result column="p_type" property="pType" jdbcType="VARCHAR"/>
-        <result column="p_b_id" property="pbId" jdbcType="VARCHAR"/>
+        <result column="p_b_id" property="pbId" jdbcType="INTEGER"/>
         <result column="p_time" property="pTime" jdbcType="DATE"/>
-        <association property="build" javaType="java.util.HashMap">
-            <result column="buildname" property="buildName" jdbcType="VARCHAR"/>
-        </association>
     </resultMap>
-    <select id="selectPhotoJilu" parameterType="com.jbj.bean.Photo" resultMap="Base2_ResultMap">
+    <select id="selectPhotoJilu"  resultMap="Base2_ResultMap">
         SELECT
-        b.buildname,
-        date_format(p.p_time,'%H:%m'),
-        p.p_type,
+            p.p_type,
+            date_format(p.p_time,'%Y-%m-%d'),
+            date_format(p.p_time,'%H:%m'),
+            b.buildname,
+            count(p.p_id)
+        FROM
+            photo p
+        INNER JOIN buildinfo b
+        on p.p_b_id=b.id
+		GROUP BY
+				b.buildname,
+				date_format(p.p_time,'%Y-%m-%d')
+    </select>
+
+    <!--查询上传记录的统计信息。每天上传了多少楼盘。一共多少张图片-->
+    <resultMap type="java.util.Map" id="Count_ResultMap">
+        <id column="p_id" property="pId" jdbcType="INTEGER"/>
+        <result column="p_b_id" property="pbId" jdbcType="INTEGER"/>
+        <result column="p_time" property="pTime" jdbcType="DATE"/>
+    </resultMap>
+    <select id="selectPhotoCount" resultMap="Count_ResultMap">
+        SELECT
+		p.p_time,
+        count(DISTINCT b.id),
         count(p.p_id)
         FROM
         photo p
         INNER JOIN buildinfo b
         on p.p_b_id=b.id
-        where
-        <if test="pTime != null">date_format(p.p_time,'%Y-%m-%d')=#{pTime,jdbcType=DATE}</if>
-        GROUP BY b.buildname
+				GROUP BY
+	date_format(p.p_time,'%Y-%m-%d')
     </select>
 
-    <select id="queryPhotoType" resultType="java.lang.String">
-        SELECT DISTINCT p.p_type
-        from photo p
+    <!--测试DTO的使用-->
+    <resultMap type="com.jbj.bean.Photo" id="Test_ResultMap">
+        <id column="p_id" property="pId" jdbcType="INTEGER"/>
+        <result column="p_city" property="pCity" jdbcType="VARCHAR"/>
+        <result column="p_b_id" property="pbId" jdbcType="INTEGER"/>
+        <result column="p_time" property="pTime" jdbcType="DATE"/>
+    </resultMap>
+    <select id="selectPhotoTest" resultMap="Test_ResultMap">
+        SELECT P.p_id,
+			p.p_city,
+			p.p_b_id,
+			p.p_time
+         FROM
+        photo P
+        where p.p_id=#{id}
     </select>
-
 
 </mapper>

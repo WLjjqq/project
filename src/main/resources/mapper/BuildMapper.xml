@@ -20,12 +20,10 @@
             <result column="taskstatus" property="taskStatus" jdbcType="VARCHAR"/>
             <result column="buildtime" property="buildTime"/>
     </resultMap>
-
-
+    <!--查询出所有的城市-->
     <select id="queryCity" resultType="java.lang.String">
        SELECT DISTINCT b.city
         from buildinfo b
     </select>
-
 
 </mapper>

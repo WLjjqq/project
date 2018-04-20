@@ -3,18 +3,12 @@
 <mapper namespace="com.jbj.mapper.FeedbackMapper">
 
     <resultMap type="com.jbj.bean.Feedback" id="Base_ResultMap">
-
         <id column="f_id" property="fId" jdbcType="INTEGER"/>
         <result column="f_type" property="fType" jdbcType="INTEGER"/>
         <result column="f_describe" property="fDescribe" jdbcType="VARCHAR"/>
         <result column="f_img" property="fImg" jdbcType="VARCHAR"/>
     </resultMap>
-
-
-    <sql id="Base_Column_List">
-  	 f_id,f_type,f_describe,f_img
-  </sql>
-
+    <!--保存反馈的信息-->
     <insert id="saveFeedback" parameterType="com.jbj.bean.Feedback" >
         insert into feedback
         <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -22,7 +16,6 @@
             <if test="fType != null">f_type,</if>
             <if test="fDescribe != null">f_describe,</if>
             <if test="fImg != null">f_img</if>
-
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="fId != null ">#{fId,jdbcType=INTEGER},</if>
@@ -31,7 +24,5 @@
             <if test="fImg != null">#{fImg,jdbcType=INTEGER}</if>
        </trim>
 </insert>
-
-
 
 </mapper>

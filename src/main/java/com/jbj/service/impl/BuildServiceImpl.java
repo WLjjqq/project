@@ -12,6 +12,11 @@ import java.util.List;
 public class BuildServiceImpl implements BuildService {
     @Autowired
     BuildMapper buildMapper;
+
+    /**
+     * 城市列表
+     * @return
+     */
     public List<String> getCity() {
         List<String> citys=buildMapper.queryCity();
         return citys;

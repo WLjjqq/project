@@ -8,13 +8,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
-			//map用来收集页面上的用户名和密码，作为参数从数据库中查询相应的数据。
-
 	@Autowired
 	UserMapper userMapper;
-/**
- * 从数据库中查找用户
- */
+	/**
+	 * 从数据库中查找用户
+	 */
 public Object check(String name,String password){
 	User user = userMapper.check(name);
 	if(user != null){
@@ -29,7 +27,5 @@ public Object check(String name,String password){
 		System.out.println("用户名不存在");
 		return "error,-2,用户名不存在";
 	}
-
 }
-
 }

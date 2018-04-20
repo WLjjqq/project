@@ -13,6 +13,11 @@ public class VersionServiceImpl implements VersionService {
     @Autowired
     private VersionMapper versionMapper;
 
+    /**
+     * 查询出最新的版本
+     * @param versionNumber
+     * @return
+     */
     public Object queryVersion(@RequestParam("versionNumber") String versionNumber) {
         Version version=versionMapper.getVersion();
         if(versionNumber.equals(version.getVersionNew())){

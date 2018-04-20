@@ -15,10 +15,14 @@ public class VersionController {
     @Autowired
     private VersionService versionService;
 
+    /**
+     * 得到最新的版本号
+     * @param versionNumber
+     * @return
+     */
     @RequestMapping(value = "/getNewVersion",method = RequestMethod.GET)
     @ResponseBody
     public Msg getNewVersion(@RequestParam("versionNumber") String versionNumber) {
-
             try{
                 return Msg.success().add("NewVersion",versionService.queryVersion(versionNumber));
             } catch (NullPointerException npe){

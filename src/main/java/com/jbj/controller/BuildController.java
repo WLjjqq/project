@@ -12,6 +12,10 @@ public class BuildController {
     @Autowired
     private BuildService buildService;
 
+    /**
+     * 城市列表
+     * @return
+     */
     @RequestMapping(value = "/city",method = RequestMethod.GET)
     @ResponseBody
     public Msg getCity(){

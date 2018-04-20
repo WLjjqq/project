@@ -7,8 +7,7 @@
             <result column="version_new" property="versionNew" jdbcType="VARCHAR"/>
             <result column="version_url" property="versionUrl" jdbcType="VARCHAR"/>
     </resultMap>
-
-
+    <!--查询出最新的版本信息-->
     <select id="getVersion"  resultMap="Base_ResultMap">
        select v_id,version_new,version_url from version
         ORDER BY version_new DESC LIMIT 1

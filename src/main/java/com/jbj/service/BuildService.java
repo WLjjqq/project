@@ -3,6 +3,9 @@ package com.jbj.service;
 import java.util.List;
 
 public interface BuildService {
-    //问题反馈保存
+    /**
+     * 城市列表
+     * @return
+     */
     List<String> getCity();
 }
