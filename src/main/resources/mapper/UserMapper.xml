@@ -11,7 +11,10 @@
             <result column="rname" property="rName" jdbcType="VARCHAR"/>
         </association>
     </resultMap>
-    <!--检验数据库中有没有这个用户-->
+    <sql id="Base_Column_List">
+  	  u.uid,u.username,u.password,r.sid,r.rname
+    </sql>
+
     <select id="check" parameterType="java.lang.String" resultMap="Base_ResultMap" >
         select
         <include refid="Base_Column_List"/>

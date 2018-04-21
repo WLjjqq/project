@@ -27,7 +27,7 @@ public class VersionController {
                 return Msg.success().add("NewVersion",versionService.queryVersion(versionNumber));
             } catch (NullPointerException npe){
                 npe.printStackTrace();
-                return Msg.success().add("mession","versionNumber没有值");
+                return Msg.fail().add("mession","versionNumber没有值");
             }
 
     }

@@ -3,27 +3,87 @@
 <mapper namespace="com.jbj.mapper.BuildMapper">
 
     <resultMap type="com.jbj.bean.Build" id="Base_ResultMap">
-            <id column="id" property="id" jdbcType="INTEGER"/>
-            <result column="buildname" property="buildName" jdbcType="VARCHAR"/>
-            <result column="dvpcompany" property="dvpcompany" jdbcType="VARCHAR"/>
-            <result column="province" property="province" jdbcType="VARCHAR"/>
-            <result column="city" property="city" jdbcType="VARCHAR"/>
-            <result column="area" property="area" jdbcType="VARCHAR"/>
-            <result column="designcompany" property="designcompany" jdbcType="VARCHAR"/>
-            <result column="sightcompany" property="sightcompany" jdbcType="VARCHAR"/>
-            <result column="pmcompany" property="pmcompany" jdbcType="VARCHAR"/>
-            <result column="sg" property="sg" jdbcType="VARCHAR"/>
-            <result column="ischoice" property="ischoice" jdbcType="VARCHAR"/>
-            <result column="delivery" property="delivery" jdbcType="VARCHAR"/>
-            <result column="periods" property="periods" jdbcType="VARCHAR"/>
-            <result column="buildingnm" property="buildingnm" jdbcType="VARCHAR"/>
-            <result column="taskstatus" property="taskStatus" jdbcType="VARCHAR"/>
-            <result column="buildtime" property="buildTime"/>
+            <id column="b_id" property="bId" jdbcType="INTEGER"/>
+            <result column="b_name" property="bName" jdbcType="VARCHAR"/>
+            <result column="b_dvpcompany" property="bDvpcompany" jdbcType="VARCHAR"/>
+            <result column="b_province" property="bProvince" jdbcType="VARCHAR"/>
+            <result column="b_city" property="bCity" jdbcType="VARCHAR"/>
+            <result column="b_area" property="bArea" jdbcType="VARCHAR"/>
+            <result column="b_designcompany" property="bDesigncompany" jdbcType="VARCHAR"/>
+            <result column="b_sightcompany" property="bSightcompany" jdbcType="VARCHAR"/>
+            <result column="b_pmcompany" property="bPmcompany" jdbcType="VARCHAR"/>
+            <result column="b_sg" property="bSg" jdbcType="VARCHAR"/>
+            <result column="b_ischoice" property="bIschoice" jdbcType="VARCHAR"/>
+            <result column="b_delivery" property="bDelivery" jdbcType="VARCHAR"/>
+            <result column="b_periods" property="bPeriods" jdbcType="VARCHAR"/>
+            <result column="b_ingnm" property="bIngnm" jdbcType="VARCHAR"/>
+            <result column="b_taskstatus" property="bTaskStatus" jdbcType="VARCHAR"/>
+            <result column="b_time" property="bDate" jdbcType="DATE"/>
     </resultMap>
     <!--查询出所有的城市-->
     <select id="queryCity" resultType="java.lang.String">
-       SELECT DISTINCT b.city
+       SELECT DISTINCT b.b_city
         from buildinfo b
     </select>
+
+    <!--根据城市查询出相应的楼盘-->
+    <resultMap id="BuildByCity_ResultMap" type="java.util.Map">
+        <id column="b_id" property="bId" jdbcType="INTEGER"/>
+        <result column="b_name" property="bName" jdbcType="VARCHAR"/>
+        <result column="b_city" property="bCity" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="selectBuildByCity" parameterType="java.lang.String" resultMap="BuildByCity_ResultMap">
+        SELECT
+            b.b_id,
+            b.b_name,
+            b.b_city
+        FROM
+            buildinfo b
+        where
+            1=1
+      and
+            <if test="bCity != null">b.b_city=#{bCity,jdbcType=VARCHAR}</if>
+    </select>
+
+    <!--保存楼盘的信息-->
+    <insert id="saveBuild" parameterType="com.jbj.bean.Build" >
+        insert into buildinfo
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="bId != null">b_id,</if>
+            <if test="bName != null">b_name,</if>
+            <if test="bDvpcompany != null">b_dvpcompany,</if>
+            <if test="bProvince != null">b_province,</if>
+            <if test="bCity != null">b_city,</if>
+            <if test="bArea != null">b_area,</if>
+            <if test="bDesigncompany != null">b_designcompany,</if>
+            <if test="bSightcompany != null">b_sightcompany,</if>
+            <if test="bPmcompany != null">b_pmcompany,</if>
+            <if test="bSg != null">b_sg,</if>
+            <if test="bIschoice != null">b_ischoice,</if>
+            <if test="bDelivery != null">b_delivery,</if>
+            <if test="bPeriods != null">b_periods,</if>
+            <if test="bIngnm != null">b_ingnm,</if>
+            <if test="bTaskStatus != null">b_taskstatus,</if>
+            <if test="bDate != null">b_time</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="bId != null">#{bId,jdbcType=INTEGER},</if>
+            <if test="bName != null">#{bName,jdbcType=VARCHAR},</if>
+            <if test="bDvpcompany != null">#{bDvpcompany,jdbcType=VARCHAR},</if>
+            <if test="bProvince != null">#{bProvince,jdbcType=VARCHAR},</if>
+            <if test="bCity != null">#{bCity,jdbcType=VARCHAR},</if>
+            <if test="bArea != null">#{bArea,jdbcType=VARCHAR},</if>
+            <if test="bDesigncompany != null">#{bDesigncompany,jdbcType=VARCHAR},</if>
+            <if test="bSightcompany != null">#{bSightcompany,jdbcType=VARCHAR},</if>
+            <if test="bPmcompany != null">#{bPmcompany,jdbcType=VARCHAR},</if>
+            <if test="bSg != null">#{bSg,jdbcType=VARCHAR},</if>
+            <if test="bIschoice != null">#{bIschoice,jdbcType=CHAR},</if>
+            <if test="bDelivery != null">#{bDelivery,jdbcType=VARCHAR},</if>
+            <if test="bPeriods != null">#{bPeriods,jdbcType=VARCHAR},</if>
+            <if test="bIngnm != null">#{bIngnm,jdbcType=VARCHAR},</if>
+            <if test="bTaskStatus != null">#{bTaskStatus,jdbcType=VARCHAR},</if>
+            <if test="bDate != null">#{bDate,jdbcType=DATE}</if>
+        </trim>
+    </insert>
 
 </mapper>

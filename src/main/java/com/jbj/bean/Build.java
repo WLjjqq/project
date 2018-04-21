@@ -3,192 +3,192 @@ package com.jbj.bean;
 import java.util.Date;
 
 public class Build {
-	private Integer id;
-	private String buildName;
-	private String dvpcompany;
-	private String province;
-	private String city;
-	private String area;
-	private String designcompany;
-	private String sightcompany;
-	private String pmcompany;
-	private String sg;
-	private String ischoice;
-	private String delivery;
-	private String periods;
-	private String buildingnm;
-	private String taskStatus;
-	private Date buildTime;
+	private Integer bId;
+	private String bName;
+	private String bDvpcompany;
+	private String bProvince;
+	private String bCity;
+	private String bArea;
+	private String bDesigncompany;
+	private String bSightcompany;
+	private String bPmcompany;
+	private String bSg;
+	private String bIschoice;
+	private String bDelivery;
+	private String bPeriods;
+	private String bIngnm;
+	private String bTaskStatus;
+	private Date bDate;
 
 public Build() {
 }
 
-public Build(Integer id, String buildName, String dvpcompany, String province, String city, String area, String designcompany, String sightcompany, String pmcompany, String sg, String ischoice, String delivery, String periods, String buildingnm, String taskStatus, Date buildTime) {
-	this.id = id;
-	this.buildName = buildName;
-	this.dvpcompany = dvpcompany;
-	this.province = province;
-	this.city = city;
-	this.area = area;
-	this.designcompany = designcompany;
-	this.sightcompany = sightcompany;
-	this.pmcompany = pmcompany;
-	this.sg = sg;
-	this.ischoice = ischoice;
-	this.delivery = delivery;
-	this.periods = periods;
-	this.buildingnm = buildingnm;
-	this.taskStatus = taskStatus;
-	this.buildTime = buildTime;
-}
+	public Build(Integer bId, String bName, String bDvpcompany, String bProvince, String bCity, String bArea, String bDesigncompany, String bSightcompany, String bPmcompany, String bSg, String bIschoice, String bDelivery, String bPeriods, String bIngnm, String bTaskStatus, Date bDate) {
+		this.bId = bId;
+		this.bName = bName;
+		this.bDvpcompany = bDvpcompany;
+		this.bProvince = bProvince;
+		this.bCity = bCity;
+		this.bArea = bArea;
+		this.bDesigncompany = bDesigncompany;
+		this.bSightcompany = bSightcompany;
+		this.bPmcompany = bPmcompany;
+		this.bSg = bSg;
+		this.bIschoice = bIschoice;
+		this.bDelivery = bDelivery;
+		this.bPeriods = bPeriods;
+		this.bIngnm = bIngnm;
+		this.bTaskStatus = bTaskStatus;
+		this.bDate = bDate;
+	}
 
-public Integer getId() {
-	return id;
-}
+	public Integer getbId() {
+		return bId;
+	}
 
-public void setId(Integer id) {
-	this.id = id;
-}
+	public void setbId(Integer bId) {
+		this.bId = bId;
+	}
 
-public String getBuildName() {
-	return buildName;
-}
+	public String getbName() {
+		return bName;
+	}
 
-public void setBuildName(String buildName) {
-	this.buildName = buildName;
-}
+	public void setbName(String bName) {
+		this.bName = bName;
+	}
 
-public String getDvpcompany() {
-	return dvpcompany;
-}
+	public String getbDvpcompany() {
+		return bDvpcompany;
+	}
 
-public void setDvpcompany(String dvpcompany) {
-	this.dvpcompany = dvpcompany;
-}
+	public void setbDvpcompany(String bDvpcompany) {
+		this.bDvpcompany = bDvpcompany;
+	}
 
-public String getProvince() {
-	return province;
-}
+	public String getbProvince() {
+		return bProvince;
+	}
 
-public void setProvince(String province) {
-	this.province = province;
-}
+	public void setbProvince(String bProvince) {
+		this.bProvince = bProvince;
+	}
 
-public String getCity() {
-	return city;
-}
+	public String getbCity() {
+		return bCity;
+	}
 
-public void setCity(String city) {
-	this.city = city;
-}
+	public void setbCity(String bCity) {
+		this.bCity = bCity;
+	}
 
-public String getArea() {
-	return area;
-}
+	public String getbArea() {
+		return bArea;
+	}
 
-public void setArea(String area) {
-	this.area = area;
-}
+	public void setbArea(String bArea) {
+		this.bArea = bArea;
+	}
 
-public String getDesigncompany() {
-	return designcompany;
-}
+	public String getbDesigncompany() {
+		return bDesigncompany;
+	}
 
-public void setDesigncompany(String designcompany) {
-	this.designcompany = designcompany;
-}
+	public void setbDesigncompany(String bDesigncompany) {
+		this.bDesigncompany = bDesigncompany;
+	}
 
-public String getSightcompany() {
-	return sightcompany;
-}
+	public String getbSightcompany() {
+		return bSightcompany;
+	}
 
-public void setSightcompany(String sightcompany) {
-	this.sightcompany = sightcompany;
-}
+	public void setbSightcompany(String bSightcompany) {
+		this.bSightcompany = bSightcompany;
+	}
 
-public String getPmcompany() {
-	return pmcompany;
-}
+	public String getbPmcompany() {
+		return bPmcompany;
+	}
 
-public void setPmcompany(String pmcompany) {
-	this.pmcompany = pmcompany;
-}
+	public void setbPmcompany(String bPmcompany) {
+		this.bPmcompany = bPmcompany;
+	}
 
-public String getSg() {
-	return sg;
-}
+	public String getbSg() {
+		return bSg;
+	}
 
-public void setSg(String sg) {
-	this.sg = sg;
-}
+	public void setbSg(String bSg) {
+		this.bSg = bSg;
+	}
 
-public String getIschoice() {
-	return ischoice;
-}
+	public String getbIschoice() {
+		return bIschoice;
+	}
 
-public void setIschoice(String ischoice) {
-	this.ischoice = ischoice;
-}
+	public void setbIschoice(String bIschoice) {
+		this.bIschoice = bIschoice;
+	}
 
-public String getDelivery() {
-	return delivery;
-}
+	public String getbDelivery() {
+		return bDelivery;
+	}
 
-public void setDelivery(String delivery) {
-	this.delivery = delivery;
-}
+	public void setbDelivery(String bDelivery) {
+		this.bDelivery = bDelivery;
+	}
 
-public String getPeriods() {
-	return periods;
-}
+	public String getbPeriods() {
+		return bPeriods;
+	}
 
-public void setPeriods(String periods) {
-	this.periods = periods;
-}
+	public void setbPeriods(String bPeriods) {
+		this.bPeriods = bPeriods;
+	}
 
-public String getBuildingnm() {
-	return buildingnm;
-}
+	public String getbIngnm() {
+		return bIngnm;
+	}
 
-public void setBuildingnm(String buildingnm) {
-	this.buildingnm = buildingnm;
-}
+	public void setbIngnm(String bIngnm) {
+		this.bIngnm = bIngnm;
+	}
 
-public String getTaskStatus() {
-	return taskStatus;
-}
+	public String getbTaskStatus() {
+		return bTaskStatus;
+	}
 
-public void setTaskStatus(String taskStatus) {
-	this.taskStatus = taskStatus;
-}
+	public void setbTaskStatus(String bTaskStatus) {
+		this.bTaskStatus = bTaskStatus;
+	}
 
-public Date getBuildTime() {
-	return buildTime;
-}
+	public Date getbDate() {
+		return bDate;
+	}
 
-public void setBuildTime(Date buildTime) {
-	this.buildTime = buildTime;
-}
+	public void setbDate(Date bDate) {
+		this.bDate = bDate;
+	}
 
-@Override
-public String toString() {
-	return "Build{" +
-			"id=" + id +
-			", buildName='" + buildName + '\'' +
-			", dvpcompany='" + dvpcompany + '\'' +
-			", province='" + province + '\'' +
-			", city='" + city + '\'' +
-			", area='" + area + '\'' +
-			", designcompany='" + designcompany + '\'' +
-			", sightcompany='" + sightcompany + '\'' +
-			", pmcompany='" + pmcompany + '\'' +
-			", sg='" + sg + '\'' +
-			", ischoice='" + ischoice + '\'' +
-			", delivery='" + delivery + '\'' +
-			", periods='" + periods + '\'' +
-			", buildingnm='" + buildingnm + '\'' +
-			", taskStatus='" + taskStatus + '\'' +
-			", buildTime=" + buildTime +
-			'}';
-}
+	@Override
+	public String toString() {
+		return "Build{" +
+				"bId=" + bId +
+				", bName='" + bName + '\'' +
+				", bDvpcompany='" + bDvpcompany + '\'' +
+				", bProvince='" + bProvince + '\'' +
+				", bCity='" + bCity + '\'' +
+				", bArea='" + bArea + '\'' +
+				", bDesigncompany='" + bDesigncompany + '\'' +
+				", bSightcompany='" + bSightcompany + '\'' +
+				", bPmcompany='" + bPmcompany + '\'' +
+				", bSg='" + bSg + '\'' +
+				", bIschoice='" + bIschoice + '\'' +
+				", bDelivery='" + bDelivery + '\'' +
+				", bPeriods='" + bPeriods + '\'' +
+				", bIngnm='" + bIngnm + '\'' +
+				", bTaskStatus='" + bTaskStatus + '\'' +
+				", bDate=" + bDate +
+				'}';
+	}
 }
