@@ -2,6 +2,7 @@ package com.jbj.service;
 
 import com.jbj.bean.Photo;
 import com.jbj.dto.PhotoDto;
+import org.apache.ibatis.annotations.Param;
 
 
 import java.util.Date;
@@ -18,21 +19,16 @@ public interface PhotoService {
 	int insert(Photo photo);
 
 	/**
-	 * 根据条件进行查询
-	 * @param id
-	 * @param date
-	 * @return
-	 */
-	 int getPhoto(Integer id,Date date);
-
-	/**
 	 * 查询照片的类型
 	 * @return
 	 */
 	Object getPhotoType();
 
-	 //返回上传记录。
-	 List<Map<String, Object>> getPhotoJilu();
+	/**
+	 * 返回上传记录。
+	 * @return
+	 */
+	List<Map<String, Object>> getPhotoJilu();
 
 	/**
 	 * 返回上传记录的统计。
@@ -46,4 +42,10 @@ public interface PhotoService {
 	 * @return
 	 */
 	PhotoDto getPhotoTest(Integer id);
+
+	/**
+	 *
+	 * @return
+	 */
+	Photo getPhoto(@Param("pId") Integer pId);
 }

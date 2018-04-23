@@ -15,13 +15,6 @@ public interface PhotoMapper {
 	int savePhoto(Photo photo);
 
 	/**
-	 * 多条件查询。
-	 * @param photo  使用photo.set去设置值，然后来查询
-	 * @return
-	 */
-	int getPhoto(Photo photo);
-
-	/**
 	 * 上传记录中统计每天的楼盘总数。照片总数
 	 * 使用dto。
 	 * @return
@@ -42,8 +35,20 @@ public interface PhotoMapper {
 
 	/**
 	 * 测试dto的使用
-	 * @param id
+	 * @param pId
 	 * @return
 	 */
-	Photo  selectPhotoTest(@Param("id") Integer id);
+	Photo  selectPhotoTest(@Param("pId") Integer pId);
+
+	/**
+	 * 查询照片所有的信息
+	 * @param pId
+	 * @return
+	 */
+	Photo selectPhotoById(@Param("pId") Integer pId);
+
+	/**
+	 * 多条件查询
+	 */
+	List<Map<String,Object>> selectPhoto(Photo photo);
 }

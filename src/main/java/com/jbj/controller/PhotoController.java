@@ -43,19 +43,6 @@ public int testFileUpload(@RequestParam("file")
 }
 
 	/**
-	 * 多条件查询。
-	 * @param id  楼盘id
-	 * @param time 时间
-	 * @return
-	 */
-	@RequestMapping(value = "/count",method = RequestMethod.GET)
-@ResponseBody
-public Msg getPhoto(@RequestParam(value = "id",defaultValue = "2") Integer id,@RequestParam("time") Date time){
-	int countPhot=photoService.getPhoto(id,time);
-	return Msg.success().add("count",countPhot);
-}
-
-	/**
 	 * 查询上传记录
 	 * @return
 	 */
@@ -63,7 +50,11 @@ public Msg getPhoto(@RequestParam(value = "id",defaultValue = "2") Integer id,@R
 	@ResponseBody
 	public Msg getPhoto(){
 		List<Map<String,Object>> list=photoService.getPhotoJilu();
-		return Msg.success().add("photos",list);
+		if(list != null){
+			return Msg.success().add("photos",list);
+		}else {
+			return Msg.fail().add("mession", "今天没有上传照片");
+		}
 }
 
 	/**
@@ -74,7 +65,11 @@ public Msg getPhoto(@RequestParam(value = "id",defaultValue = "2") Integer id,@R
 	@ResponseBody
 	public Msg getPhotCount(){
 		List<Map<String,Object>> list=photoService.getPhotoCount();
-		return Msg.success().add("photoCount",list);
+		if(list.size()==0){
+			return Msg.fail().add("mession","今天没有上传图片");
+		}else {
+			return Msg.success().add("photoCount",list);
+		}
 	}
 
 	/**
@@ -83,7 +78,12 @@ public Msg getPhoto(@RequestParam(value = "id",defaultValue = "2") Integer id,@R
 	@RequestMapping(value = "/photoTypes",method = RequestMethod.GET)
 	@ResponseBody
 	public Msg getPhotoType(){
-		return Msg.success().add("photoType",photoService.getPhotoType());
+		Object photoType = photoService.getPhotoType();
+		if(photoType instanceof String){
+			return Msg.fail().add("mession","对不起，数据库中还没有照片类型");
+		}else {
+			return Msg.success().add("photoType",photoType);
+		}
 	}
 
 	/**
@@ -94,7 +94,35 @@ public Msg getPhoto(@RequestParam(value = "id",defaultValue = "2") Integer id,@R
 	@RequestMapping(value = "/photoTest/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	public Msg getPhotoTest(@PathVariable("id") Integer id){
-		PhotoDto photoDto = photoService.getPhotoTest(id);
-		return Msg.success().add("photoTest", photoDto);
+		if(! "".equals(id)){
+			PhotoDto photoDto = photoService.getPhotoTest(id);
+			if(photoDto == null){
+				return Msg.fail().add("mession", "对不起，数据库中没有这张照片");
+			}else {
+				return Msg.success().add("photoTest", photoDto);
+			}
+		}else {
+			return Msg.fail().add("mession","id不能为空");
+		}
+	}
+
+	/**
+	 * 根据id查询出这张图片所有的信息
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "/photoById/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public Msg getPhotoById(@PathVariable("id") Integer id){
+		if(! "".equals(id)){
+			Photo photo = photoService.getPhoto(id);
+			if (photo == null) {
+				return Msg.fail().add("mession", "对不起，数据库中没有这张照片");
+			}
+			return Msg.success().add("photo", photo);
+		}else {
+			return Msg.fail().add("mession","id不能为空");
+		}
+
 	}
 }

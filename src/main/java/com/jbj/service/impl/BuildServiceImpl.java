@@ -57,20 +57,37 @@ public class BuildServiceImpl implements BuildService {
      * @return
      */
     public int saveBuild(Build build) {
-        int i = buildMapper.saveBuild(build);
-     /*  List<Map<String,Object>> list= buildMapper.selectBuildByCity(build.getbCity());
-        String buildName=null;
-        String buildCity=null;
-       for(int a=0;a<list.size();a++){
-           Map map = list.get(a);
-            buildName = (String) map.get("bName");
-            buildCity=  (String) map.get("bCity");
-       }
-        System.out.println(buildCity);*/
-        if(i<=0){
-            throw new NoDataException("您输入的信息有误，没能保存，请仔细检查");
-        }else {
-            return i;
+        //根据城市查询出楼盘
+        List<String> list = buildMapper.selectBuildNameByCity(build.getbCity());
+        if(list.size() == 0){
+            //还没有这个城市的，可以进行保存。
+            int a=buildMapper.saveBuild(build);
+            if(a>0){
+                return a;
+            }else {
+                return -1;
+            }
+        }else{
+            //有这个城市,取出对应的楼盘名。然后和要保存的数进行比对。如果不一样，保存。
+            if(! useLoop(build)){
+               int a = buildMapper.saveBuild(build);
+                if(a>0){
+                    return a;
+                }else{
+                    return -1;
+                }
+            }else{
+                return -1;
+            }
         }
+    }
+    //去判断根据城市查询出楼盘list中有没有前台传递的楼盘名。
+    public  boolean useLoop(Build build) {
+        List<String> list = buildMapper.selectBuildNameByCity(build.getbCity());
+        for(String s: list){
+            if(s.equals(build.getbName()))
+                return true;
+        }
+        return false;
     }
 }

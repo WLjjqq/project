@@ -37,7 +37,7 @@ public class JunitTest {
 	}
 
 
-	@Test
+/*	@Test
 	public void test1(){
 		Photo photo=new Photo();
 		photo.setPbId(2);
@@ -45,7 +45,7 @@ public class JunitTest {
 		photo.setpTime(date);
 		System.out.println(photo.getpTime());
 		photoService.getPhoto(photo.getPbId(),photo.getpTime());
-	}
+	}*/
 
 	//查询照片的类型
 	@Test

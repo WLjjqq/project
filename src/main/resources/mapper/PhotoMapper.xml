@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jbj.mapper.PhotoMapper">
-
     <resultMap type="com.jbj.bean.Photo" id="Base_ResultMap">
         <id column="p_id" property="pId" jdbcType="INTEGER"/>
         <result column="p_type" property="pType" jdbcType="VARCHAR"/>
@@ -21,23 +20,23 @@
         <result column="p_photo" property="pPhoto" jdbcType="VARCHAR"/>
         <result column="p_address" property="pAddress" jdbcType="VARCHAR"/>
         <result column="p_time" property="pTime" jdbcType="DATE"/>
-        <association property="build" javaType="com.jbj.bean.Build">
-            <id column="id" property="id" jdbcType="INTEGER"/>
-            <result column="buildname" property="buildName" jdbcType="VARCHAR"/>
-            <result column="dvpcompany" property="dvpcompany" jdbcType="VARCHAR"/>
-            <result column="province" property="province" jdbcType="VARCHAR"/>
-            <result column="city" property="city" jdbcType="VARCHAR"/>
-            <result column="area" property="area" jdbcType="VARCHAR"/>
-            <result column="designcompany" property="designcompany" jdbcType="VARCHAR"/>
-            <result column="sightcompany" property="sightcompany" jdbcType="VARCHAR"/>
-            <result column="pmcompany" property="pmcompany" jdbcType="VARCHAR"/>
-            <result column="sg" property="sg" jdbcType="VARCHAR"/>
-            <result column="ischoice" property="ischoice" jdbcType="VARCHAR"/>
-            <result column="delivery" property="delivery" jdbcType="VARCHAR"/>
-            <result column="periods" property="periods" jdbcType="VARCHAR"/>
-            <result column="buildingnm" property="buildingnm" jdbcType="VARCHAR"/>
-            <result column="taskstatus" property="taskStatus" jdbcType="VARCHAR"/>
-            <result column="buildtime" property="buildTime"/>
+        <association property="build" javaType="com.jbj.bean.Photo">
+            <id column="b_id" property="bId" jdbcType="INTEGER"/>
+            <result column="b_name" property="bName" jdbcType="VARCHAR"/>
+            <result column="b_dvpcompany" property="bDvpcompany" jdbcType="VARCHAR"/>
+            <result column="b_province" property="bProvince" jdbcType="VARCHAR"/>
+            <result column="b_city" property="bCity" jdbcType="VARCHAR"/>
+            <result column="b_area" property="bArea" jdbcType="VARCHAR"/>
+            <result column="b_designcompany" property="bDesigncompany" jdbcType="VARCHAR"/>
+            <result column="b_sightcompany" property="bSightcompany" jdbcType="VARCHAR"/>
+            <result column="b_pmcompany" property="bPmcompany" jdbcType="VARCHAR"/>
+            <result column="b_sg" property="bSg" jdbcType="VARCHAR"/>
+            <result column="b_ischoice" property="bIschoice" jdbcType="VARCHAR"/>
+            <result column="b_delivery" property="bDelivery" jdbcType="VARCHAR"/>
+            <result column="b_periods" property="bPeriods" jdbcType="VARCHAR"/>
+            <result column="b_ingnm" property="bIngnm" jdbcType="VARCHAR"/>
+            <result column="b_taskStatus" property="bTaskStatus" jdbcType="VARCHAR"/>
+            <result column="b_date" property="bDate" jdbcType="VARCHAR"/>
         </association>
     </resultMap>
 
@@ -92,19 +91,6 @@
         from photo p
     </select>
 
-<!--多条件查询-->
-  <select id="selectPhoto" parameterType="com.jbj.bean.Photo" resultType="java.lang.Integer">
-         select
-         count(p.p_id),b.buildname from photo p
-            inner join buildinfo b
-            on p.p_b_id =b.id
-            where
-            <if test="pbId !=null">
-                b.id=#{pbId,jdbcType=INTEGER}
-            </if>
-			and
-            <if test="pTime != null">date_format(p.p_time,'%Y-%m-%d')=#{pTime,jdbcType=DATE}</if>
-    </select>
 
 <!--查询上传记录-->
     <resultMap type="java.util.HashMap" id="Base2_ResultMap">
@@ -116,17 +102,18 @@
     <select id="selectPhotoJilu"  resultMap="Base2_ResultMap">
         SELECT
             p.p_type,
-            date_format(p.p_time,'%Y-%m-%d'),
-            date_format(p.p_time,'%H:%m'),
-            b.buildname,
+            date_format(p.p_time, '%Y-%m-%d'),
+            date_format(p.p_time, '%H:%m'),
+            b.b_name,
             count(p.p_id)
         FROM
             photo p
         INNER JOIN buildinfo b
-        on p.p_b_id=b.id
-		GROUP BY
-				b.buildname,
-				date_format(p.p_time,'%Y-%m-%d')
+        ON
+            p.p_b_id = b.b_id
+        GROUP BY
+            b.b_name,
+            date_format(p.p_time, '%Y-%m-%d')
     </select>
 
     <!--查询上传记录的统计信息。每天上传了多少楼盘。一共多少张图片-->
@@ -137,14 +124,15 @@
     </resultMap>
     <select id="selectPhotoCount" resultMap="Count_ResultMap">
         SELECT
-		p.p_time,
-        count(DISTINCT b.id),
-        count(p.p_id)
+            p.p_time,
+            count(DISTINCT b.b_id),
+            count(p.p_id)
         FROM
-        photo p
+            photo p
         INNER JOIN buildinfo b
-        on p.p_b_id=b.id
-				GROUP BY
+        ON
+            p.p_b_id = b.b_id
+		GROUP BY
 	date_format(p.p_time,'%Y-%m-%d')
     </select>
 
@@ -155,14 +143,62 @@
         <result column="p_b_id" property="pbId" jdbcType="INTEGER"/>
         <result column="p_time" property="pTime" jdbcType="DATE"/>
     </resultMap>
-    <select id="selectPhotoTest" resultMap="Test_ResultMap">
+    <select id="selectPhotoTest" parameterType="java.lang.Integer" resultMap="Test_ResultMap">
         SELECT P.p_id,
 			p.p_city,
 			p.p_b_id,
 			p.p_time
          FROM
         photo P
-        where p.p_id=#{id}
+        where
+        <if test="pId != null">p.p_id=#{pId}</if>
+    </select>
+    <!--根据id查询照片所有的信息-->
+    <select id="selectPhotoById" parameterType="java.lang.Integer" resultMap="Base_ResultMap">
+        select
+          *
+        from
+          photo p
+        where
+        <if test="pId != null">p.p_id=#{pId}</if>
+    </select>
+<!--多条件查询-->
+    <resultMap type="java.util.Map" id="duo_ResultMap">
+        <id column="p_id" property="pId" jdbcType="INTEGER"/>
+        <result column="p_type" property="pType" jdbcType="VARCHAR"/>
+        <result column="p_city" property="pCity" jdbcType="VARCHAR"/>
+        <result column="p_b_id" property="pbId" jdbcType="VARCHAR"/>
+        <result column="p_household" property="pHousehold" jdbcType="VARCHAR"/>
+        <result column="p_unit" property="pUnit" jdbcType="VARCHAR"/>
+        <result column="p_floor" property="pFloor" jdbcType="VARCHAR"/>
+        <result column="p_door_model" property="pDoorModel" jdbcType="VARCHAR"/>
+        <result column="p_wall" property="pWall" jdbcType="VARCHAR"/>
+        <result column="p_note1" property="pNote1" jdbcType="VARCHAR"/>
+        <result column="p_note2" property="pNote2" jdbcType="VARCHAR"/>
+        <result column="p_note3" property="pNote3" jdbcType="VARCHAR"/>
+        <result column="p_points" property="pPoints" jdbcType="VARCHAR"/>
+        <result column="p_measurement" property="pMeasurement" jdbcType="VARCHAR"/>
+        <result column="p_lable" property="pLable" jdbcType="VARCHAR"/>
+        <result column="p_photo" property="pPhoto" jdbcType="VARCHAR"/>
+        <result column="p_address" property="pAddress" jdbcType="VARCHAR"/>
+        <result column="p_time" property="pTime" jdbcType="DATE"/>
+    </resultMap>
+    <select id="selectPhoto" parameterType="com.jbj.bean.Photo" resultMap="duo_ResultMap">
+        SELECT
+            *
+        FROM
+            photo p
+        INNER JOIN buildinfo b
+        ON
+            p.p_b_id = b.b_id
+        where
+            1=1
+        <if test="pCity != null">
+            AND p.p_city=#{pCity}
+        </if>
+        <if test="pbId != null">
+            AND p.p_b_id=#{pbId}
+        </if>
     </select>
 
 </mapper>

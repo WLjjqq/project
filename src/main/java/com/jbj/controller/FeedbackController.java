@@ -2,6 +2,7 @@ package com.jbj.controller;
 
 import com.jbj.bean.Feedback;
 import com.jbj.service.FeedbackService;
+import com.jbj.utils.Msg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +22,12 @@ public class FeedbackController {
      */
     @RequestMapping(value = "/saveFeedback",method = RequestMethod.GET)
     @ResponseBody
-    public Object saveFeedbackController(Feedback feedback){
-            return feedbackService.saveFeedback(feedback);
+    public Msg saveFeedbackController(Feedback feedback){
+        Object o = feedbackService.saveFeedback(feedback);
+        if(o instanceof String){
+            return Msg.fail().add("mession","您输入的信息有误，请认真检查");
+        }else {
+            return Msg.success().add("mession","保存成功");
+        }
     }
 }

@@ -50,12 +50,17 @@ public class BuildController {
     @RequestMapping(value = "/saveBuild", method = RequestMethod.GET)
     @ResponseBody
     public Msg saveBuild(Build build){
-        int i = buildService.saveBuild(build);
-        if(i>0){
-            return Msg.success().add("mession","保存成功");
-        }else {
-            return Msg.fail().add("mession","输入信息有误，请认真检查");
+        try {
+            int i = buildService.saveBuild(build);
+            if(i>0){
+                return Msg.success().add("mession","保存成功");
+            }else {
+                return Msg.fail().add("mession","输入信息有误，请认真检查");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
+    return null;
 
     }
 }

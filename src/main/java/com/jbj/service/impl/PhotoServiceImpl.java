@@ -7,8 +7,6 @@ import com.jbj.service.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -26,25 +24,6 @@ public class PhotoServiceImpl implements PhotoService {
 		int a = photoMapper.savePhoto(photo);
 		if(a > 0){
 			return a;
-		}else{
-			return -1;
-		}
-	}
-
-	/**
-	 * 多个条件查询。传递要查询的条件作为参数，然后用对象去查询。
-	 * @param id
-	 * @param date
-	 * @return
-	 */
-	public int getPhoto(Integer id,Date date) {
-		Photo photo=new Photo();
-		photo.setPbId(id);
-		photo.setpTime(date);
-
-		int countPhoto=photoMapper.getPhoto(photo);
-		if(countPhoto > 0){
-			return countPhoto;
 		}else{
 			return -1;
 		}
@@ -69,7 +48,10 @@ public class PhotoServiceImpl implements PhotoService {
 	 */
 	public List<Map<String, Object>> getPhotoJilu() {
 		List<Map<String, Object>> photos = photoMapper.selectPhotoJilu();
-		return photos;
+		if(photos.size()>0){
+			return photos;
+		}
+			return null;
 	}
 
 	/**
@@ -78,6 +60,7 @@ public class PhotoServiceImpl implements PhotoService {
 	 */
 	public List<Map<String,Object>> getPhotoCount() {
 		List<Map<String,Object>> maps = photoMapper.selectPhotoCount();
+
 		return maps;
 	}
 
@@ -88,6 +71,27 @@ public class PhotoServiceImpl implements PhotoService {
 	 */
 	public PhotoDto getPhotoTest(Integer id) {
 		Photo photo = photoMapper.selectPhotoTest(id);
-		return new PhotoDto(photo.getpId(), photo.getPbId(),photo.getpTime(), photo.getpCity());
+		 /* 这里用equals就会出错。
+		 	object.equals(null)，“equals()”方法是比较“值”是否相等；
+		  	object==null,“==”比较运算符是用来比较“对象”是否是同一个。*/
+		if(photo == null){
+			return null;
+		}else {
+			return new PhotoDto(photo.getpId(), photo.getPbId(),photo.getpTime(), photo.getpCity());
+		}
+	}
+
+	/**
+	 * 根据id查询出照片所有的信息
+	 * @param pId
+	 * @return
+	 */
+	public Photo getPhoto(Integer pId) {
+		Photo photo = photoMapper.selectPhotoById(pId);
+		if (photo == null) {
+			return null;
+		}else {
+			return photo;
+		}
 	}
 }

@@ -41,8 +41,20 @@
             buildinfo b
         where
             1=1
-      and
+        and
             <if test="bCity != null">b.b_city=#{bCity,jdbcType=VARCHAR}</if>
+    </select>
+
+    <!--根据城市查询出对应的楼盘信息，如果有从前台拿到的数据和后台的楼盘信息不一样，进行保存-->
+    <select id="selectBuildNameByCity" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT
+          b.b_name
+        FROM
+          buildinfo b
+        where
+          1=1
+        and
+        <if test="bCity != null">b.b_city=#{bCity,jdbcType=VARCHAR}</if>
     </select>
 
     <!--保存楼盘的信息-->
