@@ -24,4 +24,10 @@ public interface BuildService {
      */
     int saveBuild(Build build);
 
+    /**
+     * 根据楼盘名来查询id，所在的城市。
+     * @param bName
+     * @return
+     */
+    List<Map<String,Object>> queryBIdAndBCityByBName(String bName);
 }

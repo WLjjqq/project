@@ -22,8 +22,11 @@
     </resultMap>
     <!--查询出所有的城市-->
     <select id="queryCity" resultType="java.lang.String">
-       SELECT DISTINCT b.b_city
+       SELECT b.b_city,
+            count(DISTINCT b.b_city) distinctcity
         from buildinfo b
+        GROUP BY b.b_city
+        HAVING distinctcity >0
     </select>
 
     <!--根据城市查询出相应的楼盘-->
@@ -41,8 +44,9 @@
             buildinfo b
         where
             1=1
-        and
-            <if test="bCity != null">b.b_city=#{bCity,jdbcType=VARCHAR}</if>
+            <if test="bCity != null">
+         and b.b_city=#{bCity,jdbcType=VARCHAR}
+            </if>
     </select>
 
     <!--根据城市查询出对应的楼盘信息，如果有从前台拿到的数据和后台的楼盘信息不一样，进行保存-->
@@ -97,5 +101,20 @@
             <if test="bDate != null">#{bDate,jdbcType=DATE}</if>
         </trim>
     </insert>
+    <!--根据楼盘名，查询出对应的城市-->
+    <resultMap type="java.util.Map" id="City_ResultMap">
+        <id column="b_id" property="bId" jdbcType="INTEGER"/>
+        <result column="b_name" property="bName" jdbcType="VARCHAR"/>
+        <result column="b_city" property="bCity" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="selectBIdAndBCity" parameterType="java.lang.String" resultMap="City_ResultMap">
+        SELECT b.b_id,b.b_city
+        FROM buildinfo b
+        where 1=1
+        <if test="bName != null">
+            AND b.b_name=#{bName,jdbcType=VARCHAR}
+        </if>
+    </select>
+
 
 </mapper>

@@ -21,6 +21,7 @@ public class PhotoServiceImpl implements PhotoService {
 	 * @return
 	 */
 	public int insert(Photo photo) {
+
 		int a = photoMapper.savePhoto(photo);
 		if(a > 0){
 			return a;

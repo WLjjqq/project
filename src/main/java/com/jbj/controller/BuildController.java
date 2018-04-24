@@ -50,17 +50,32 @@ public class BuildController {
     @RequestMapping(value = "/saveBuild", method = RequestMethod.GET)
     @ResponseBody
     public Msg saveBuild(Build build){
-        try {
-            int i = buildService.saveBuild(build);
-            if(i>0){
-                return Msg.success().add("mession","保存成功");
-            }else {
-                return Msg.fail().add("mession","输入信息有误，请认真检查");
+        if(! "".equals(build.getbCity()) && ! (build.getbCity() == null) ){
+            try {
+                int i = buildService.saveBuild(build);
+                if(i>0){
+                    return Msg.success().add("mession","保存成功");
+                }else {
+                    return Msg.fail().add("mession","输入信息有误，请认真检查");
+                }
+            }catch (Exception e){
+                e.printStackTrace();
             }
-        }catch (Exception e){
-            e.printStackTrace();
+        }else{
+            return Msg.fail().add("mession","您输入的城市有误，不能为null");
         }
-    return null;
+        return null;
+       }
 
+    @RequestMapping(value = "/queryCityByName/{bName}",method = RequestMethod.GET)
+    @ResponseBody
+    public Msg queryBIdAndBCityByBName(@PathVariable("bName") String bName){
+        if(! "".equals(bName)) {
+            List<Map<String, Object>> list = buildService.queryBIdAndBCityByBName(bName);
+            return Msg.success().add("list", list);
+        }else {
+            return Msg.fail().add("mession", "请输入楼盘的名字");
+        }
     }
-}
+    }
+

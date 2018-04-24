@@ -59,6 +59,7 @@ public class BuildServiceImpl implements BuildService {
     public int saveBuild(Build build) {
         //根据城市查询出楼盘
         List<String> list = buildMapper.selectBuildNameByCity(build.getbCity());
+
         if(list.size() == 0){
             //还没有这个城市的，可以进行保存。
             int a=buildMapper.saveBuild(build);
@@ -81,7 +82,12 @@ public class BuildServiceImpl implements BuildService {
             }
         }
     }
-    //去判断根据城市查询出楼盘list中有没有前台传递的楼盘名。
+
+    /**
+     * 去判断根据城市查询出楼盘list中有没有前台传递的楼盘名。
+     * @param build
+     * @return
+     */
     public  boolean useLoop(Build build) {
         List<String> list = buildMapper.selectBuildNameByCity(build.getbCity());
         for(String s: list){
@@ -89,5 +95,10 @@ public class BuildServiceImpl implements BuildService {
                 return true;
         }
         return false;
+    }
+
+    public List<Map<String, Object>> queryBIdAndBCityByBName(String bName) {
+        List<Map<String, Object>> list = buildMapper.selectBIdAndBCity(bName);
+        return list;
     }
 }

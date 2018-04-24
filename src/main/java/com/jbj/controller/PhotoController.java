@@ -42,6 +42,7 @@ public int testFileUpload(@RequestParam("file")
 	return a;
 }
 
+
 	/**
 	 * 查询上传记录
 	 * @return
@@ -123,6 +124,28 @@ public int testFileUpload(@RequestParam("file")
 		}else {
 			return Msg.fail().add("mession","id不能为空");
 		}
+	}
 
+	/**
+	 * 保存图片
+	 * @param photo
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/savePhoto",method = RequestMethod.GET)
+	@ResponseBody
+	public Msg savePhoto(Photo photo) throws Exception {
+		if(!"".equals(photo.getpType()) && !(photo.getpCity() ==null)
+				&& !"".equals(photo.getpCity()) && !(photo.getpCity() ==null)
+				){
+			int a=photoService.insert(photo);
+			if(a>0){
+				return Msg.success().add("success", "保存成功");
+			}else{
+				return Msg.fail().add("fail", "保存不成功");
+			}
+		}else {
+			return Msg.fail().add("mession","请选择照片类型");
+		}
 	}
 }

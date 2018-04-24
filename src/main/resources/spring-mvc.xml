@@ -30,13 +30,12 @@
 	         <property name="maxUploadSize" value="1024000"/>
 	     </bean>
 
-<!--<mvc:interceptors>
+<mvc:interceptors>
 	<mvc:interceptor>
-
-		<mvc:mapping path="/version/getNewVersion"/>
+		<mvc:mapping path="/build/saveBuild"/>
 		<bean class="com.jbj.interceptor.MyInterceptor"></bean>
 	</mvc:interceptor>
-</mvc:interceptors>-->
+</mvc:interceptors>
 
 	<!--两个标准配置  -->
 	<!-- 将springmvc不能处理的请求交给tomcat -->

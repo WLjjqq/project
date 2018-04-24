@@ -70,7 +70,7 @@ public class BuildTest extends BaseTest {
         }
     }
 
-    @Test
+
     public boolean useLoop(Build build) {
                List<String> list = buildMapper.selectBuildNameByCity(build.getbCity());
         for(String s: list){
@@ -78,5 +78,37 @@ public class BuildTest extends BaseTest {
                 return true;
         }
         return false;
+    }
+    @Test
+    public void testSelectCity(){
+        List<String> list = buildMapper.queryCity();
+        for (String s:list
+             ) {
+            System.out.println(s);
+        }
+    }
+    @Test
+    public void testSelectBuildByCity(){
+        List<Map<String, Object>> list = buildMapper.selectBuildByCity("");
+        for (Map<String,Object> map:list
+                ) {
+            System.out.println(map);
+        }
+    }
+
+    @Test
+    public void testString(){
+        String a="    aa  aa  ";
+        String b = a.replaceAll(" ", "");
+        System.out.println(a);
+        System.out.println(b);
+    }
+    @Test
+    public void testselectBIdAndBCity(){
+        List<Map<String, Object>> list = buildMapper.selectBIdAndBCity("美景");
+        for (Map<String,Object> m:list
+             ) {
+            System.out.println(m);
+        }
     }
 }

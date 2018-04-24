@@ -30,5 +30,13 @@ public class PhotoTest extends BaseTest {
         }
     }
 
+    @Test
+    public void testPhoto(){
+        Photo photo = new Photo();
+        photo.setPbId(55);
+
+        photo.setpType("物业拍照");
+        photoMapper.savePhoto(photo);
+    }
 
 }
