@@ -21,7 +21,6 @@ public interface BuildMapper {
 
    /**
     * 保存楼盘的信息
-    *
     * @param build
     * @return
     */
@@ -29,7 +28,6 @@ public interface BuildMapper {
 
    /**
     * 查询出楼盘的名字根据城市。如果一样，就不进行保存了。不一样的时候才进行保存。
-    *
     * @param bCity
     * @return
     */
@@ -42,5 +40,20 @@ public interface BuildMapper {
     */
    List<Map<String, Object>> selectBIdAndBCity(@Param("bName") String bName);
 
+   /**
+    * 查询出楼盘信息根据id。
+    * @param bId
+    * @return
+    */
+   Build selectBuildById(@Param("bId") Integer bId);
+   /**
+    * 修改补拍原因
+    * @return
+    */
+   int updateBuildFillType(@Param("lId") Integer lId,@Param("bId") Integer bId);
 
+   /**
+    *补拍完成后，修改照片的数量
+    */
+   int updatePhotos(@Param("bFillPhotos") Integer bFillPhotos,@Param("bId") Integer bId);
 }

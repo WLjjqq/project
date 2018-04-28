@@ -1,6 +1,7 @@
 package com.jbj.service;
 
 import com.jbj.bean.Build;
+import com.jbj.bean.Photo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -30,4 +31,20 @@ public interface BuildService {
      * @return
      */
     List<Map<String,Object>> queryBIdAndBCityByBName(String bName);
+
+    /**
+     * 楼盘补拍查询出列表
+     */
+    List<Map<String,Object>> FillPhotoType();
+    /**
+     * 楼盘修改补拍原因，补拍列表+1
+     */
+    int updateBuildFillType(Integer lId,Integer bId);
+
+    /**
+     * 开始补拍。修改补拍的数量
+     * @return
+     */
+    int updateFillPhotos(Integer bId, Photo photo);
+
 }

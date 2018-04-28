@@ -1,5 +1,7 @@
 package com.jbj.bean;
 
+import com.jbj.enums.BaseEnum;
+
 import java.util.Date;
 
 public class Build {
@@ -13,17 +15,23 @@ public class Build {
 	private String bSightcompany;
 	private String bPmcompany;
 	private String bSg;
-	private String bIschoice;
+	private BaseEnum bIschoice;
 	private String bDelivery;
 	private String bPeriods;
 	private String bIngnm;
 	private String bTaskStatus;
 	private Date bDate;
+	private Integer bPhotosCount;
+	private Integer bFillType;
+	private Integer bPhotos;
+	private Integer bFillPhotos;
+	private Integer bEditors;
+	private Integer bNoEditors;
 
-public Build() {
-}
+	public Build() {
+	}
 
-	public Build(Integer bId, String bName, String bDvpcompany, String bProvince, String bCity, String bArea, String bDesigncompany, String bSightcompany, String bPmcompany, String bSg, String bIschoice, String bDelivery, String bPeriods, String bIngnm, String bTaskStatus, Date bDate) {
+	public Build(Integer bId, String bName, String bDvpcompany, String bProvince, String bCity, String bArea, String bDesigncompany, String bSightcompany, String bPmcompany, String bSg, BaseEnum bIschoice, String bDelivery, String bPeriods, String bIngnm, String bTaskStatus, Date bDate, Integer bPhotosCount, Integer bFillType, Integer bPhotos, Integer bFillPhotos, Integer bEditors, Integer bNoEditors) {
 		this.bId = bId;
 		this.bName = bName;
 		this.bDvpcompany = bDvpcompany;
@@ -40,6 +48,12 @@ public Build() {
 		this.bIngnm = bIngnm;
 		this.bTaskStatus = bTaskStatus;
 		this.bDate = bDate;
+		this.bPhotosCount = bPhotosCount;
+		this.bFillType = bFillType;
+		this.bPhotos = bPhotos;
+		this.bFillPhotos = bFillPhotos;
+		this.bEditors = bEditors;
+		this.bNoEditors = bNoEditors;
 	}
 
 	public Integer getbId() {
@@ -122,11 +136,11 @@ public Build() {
 		this.bSg = bSg;
 	}
 
-	public String getbIschoice() {
+	public BaseEnum getbIschoice() {
 		return bIschoice;
 	}
 
-	public void setbIschoice(String bIschoice) {
+	public void setbIschoice(BaseEnum bIschoice) {
 		this.bIschoice = bIschoice;
 	}
 
@@ -170,6 +184,54 @@ public Build() {
 		this.bDate = bDate;
 	}
 
+	public Integer getbPhotosCount() {
+		return bPhotosCount;
+	}
+
+	public void setbPhotosCount(Integer bPhotosCount) {
+		this.bPhotosCount = bPhotosCount;
+	}
+
+	public Integer getbFillType() {
+		return bFillType;
+	}
+
+	public void setbFillType(Integer bFillType) {
+		this.bFillType = bFillType;
+	}
+
+	public Integer getbPhotos() {
+		return bPhotos;
+	}
+
+	public void setbPhotos(Integer bPhotos) {
+		this.bPhotos = bPhotos;
+	}
+
+	public Integer getbFillPhotos() {
+		return bFillPhotos;
+	}
+
+	public void setbFillPhotos(Integer bFillPhotos) {
+		this.bFillPhotos = bFillPhotos;
+	}
+
+	public Integer getbEditors() {
+		return bEditors;
+	}
+
+	public void setbEditors(Integer bEditors) {
+		this.bEditors = bEditors;
+	}
+
+	public Integer getbNoEditors() {
+		return bNoEditors;
+	}
+
+	public void setbNoEditors(Integer bNoEditors) {
+		this.bNoEditors = bNoEditors;
+	}
+
 	@Override
 	public String toString() {
 		return "Build{" +
@@ -189,6 +251,12 @@ public Build() {
 				", bIngnm='" + bIngnm + '\'' +
 				", bTaskStatus='" + bTaskStatus + '\'' +
 				", bDate=" + bDate +
+				", bPhotosCount=" + bPhotosCount +
+				", bFillType=" + bFillType +
+				", bPhotos=" + bPhotos +
+				", bFillPhotos=" + bFillPhotos +
+				", bEditors=" + bEditors +
+				", bNoEditors=" + bNoEditors +
 				'}';
 	}
 }

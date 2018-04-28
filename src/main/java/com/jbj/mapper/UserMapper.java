@@ -1,6 +1,7 @@
 package com.jbj.mapper;
 
 import com.jbj.bean.User;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -12,5 +13,5 @@ public interface UserMapper {
   * @param userName
   * @return
   */
- User check(String userName);
+ User check(@Param("userName") String userName);
 }

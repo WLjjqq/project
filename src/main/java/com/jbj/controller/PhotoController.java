@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -147,5 +148,30 @@ public int testFileUpload(@RequestParam("file")
 		}else {
 			return Msg.fail().add("mession","请选择照片类型");
 		}
+	}
+
+	/**
+	 * 批量删除。传递的是一个String。然后去除掉“-”，转换成Integer。放到List中。
+	 * @param ids
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/deletePhoto/{ids}", method = RequestMethod.GET)
+	@ResponseBody
+	public Msg deletePhotos(@PathVariable("ids") String ids) throws Exception{
+			List<Integer> del_ids = new ArrayList<Integer>();
+			String[] str_ids = ids.split("-");
+			for(String string:str_ids){
+				del_ids.add(Integer.parseInt(string));
+			}
+			if(del_ids.size()==0){
+				return Msg.fail().add("mession","请选择要删除的数据");
+			}
+		int i = photoService.deletePhotos(del_ids);
+			if(i>0){
+				return Msg.success().add("mession", "删除成功");
+			}else {
+				return Msg.fail().add("mession","删除失败");
+			}
 	}
 }

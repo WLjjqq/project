@@ -48,4 +48,11 @@ public interface PhotoService {
 	 * @return
 	 */
 	Photo getPhoto(@Param("pId") Integer pId);
+
+	/**
+	 * 批量删除
+	 * @param pId
+	 * @return
+	 */
+	int deletePhotos(List<Integer> pId);
 }

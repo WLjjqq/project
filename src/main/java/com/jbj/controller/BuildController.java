@@ -56,7 +56,7 @@ public class BuildController {
                 if(i>0){
                     return Msg.success().add("mession","保存成功");
                 }else {
-                    return Msg.fail().add("mession","输入信息有误，请认真检查");
+                    return Msg.fail().add("mession","数据库中这个城市已经有这个楼盘了");
                 }
             }catch (Exception e){
                 e.printStackTrace();
@@ -67,6 +67,11 @@ public class BuildController {
         return null;
        }
 
+    /**
+     * 根据楼盘名查询城市和id
+     * @param bName
+     * @return
+     */
     @RequestMapping(value = "/queryCityByName/{bName}",method = RequestMethod.GET)
     @ResponseBody
     public Msg queryBIdAndBCityByBName(@PathVariable("bName") String bName){
@@ -77,5 +82,22 @@ public class BuildController {
             return Msg.fail().add("mession", "请输入楼盘的名字");
         }
     }
+
+    /**
+     * 查询补拍原因列表
+     * @return
+     */
+    @RequestMapping(value = "/queryFillList",method = RequestMethod.GET)
+    @ResponseBody
+    public Msg queryFillList(){
+        List<Map<String, Object>> list = buildService.FillPhotoType();
+        if(list.size()>0){
+            return Msg.success().add("list", list);
+        }else {
+            return Msg.fail().add("mession","请维护补拍原因列表");
+        }
+    }
+
+
     }
 

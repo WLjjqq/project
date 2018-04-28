@@ -1,11 +1,15 @@
 package com.jbj.service.impl;
 
+import com.jbj.bean.Build;
 import com.jbj.bean.Photo;
 import com.jbj.dto.PhotoDto;
+import com.jbj.enums.BaseEnum;
+import com.jbj.mapper.BuildMapper;
 import com.jbj.mapper.PhotoMapper;
 import com.jbj.service.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -14,6 +18,8 @@ import java.util.Map;
 public class PhotoServiceImpl implements PhotoService {
 	@Autowired
 	private  PhotoMapper photoMapper;
+	@Autowired
+	private BuildMapper buildMapper;
 
 	/**
 	 * 保存图片
@@ -22,6 +28,12 @@ public class PhotoServiceImpl implements PhotoService {
 	 */
 	public int insert(Photo photo) {
 
+		Build build = buildMapper.selectBuildById(photo.getPbId());
+		if(build.getbFillType() == null){
+			photo.setpIsFill(BaseEnum.ISFILL);
+		}else{
+			photo.setpIsFill(BaseEnum.ISNOTFILL);
+		}
 		int a = photoMapper.savePhoto(photo);
 		if(a > 0){
 			return a;
@@ -61,7 +73,6 @@ public class PhotoServiceImpl implements PhotoService {
 	 */
 	public List<Map<String,Object>> getPhotoCount() {
 		List<Map<String,Object>> maps = photoMapper.selectPhotoCount();
-
 		return maps;
 	}
 
@@ -93,6 +104,19 @@ public class PhotoServiceImpl implements PhotoService {
 			return null;
 		}else {
 			return photo;
+		}
+	}
+
+	/**
+	 * 批量删除
+	 * @param list
+	 * @return
+	 */
+	public int deletePhotos(List<Integer> list ) {
+		if(list.size() == 0){
+			return -1;
+		}else{
+			return photoMapper.deletePhotos(list);
 		}
 	}
 }

@@ -51,4 +51,17 @@ public interface PhotoMapper {
 	 * 多条件查询
 	 */
 	List<Map<String,Object>> selectPhoto(Photo photo);
+
+	/**
+	 * 多个id删除
+	 * @param pId
+	 * @return
+	 */
+	int deletePhotos(List<Integer> pId);
+
+	/**
+	 * 楼盘需要补拍。照片的是否补拍状态修改成“是”
+	 * @return
+	 */
+	int updatePhotoFill(List<Integer> pId);
 }

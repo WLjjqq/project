@@ -1,14 +1,21 @@
 package com.jbj.service.impl;
 
 import com.jbj.bean.Build;
+import com.jbj.bean.ListOf;
+import com.jbj.bean.Photo;
+import com.jbj.enums.BaseEnum;
 import com.jbj.exception.NoDataException;
 import com.jbj.mapper.BuildMapper;
+import com.jbj.mapper.ListOfMapper;
+import com.jbj.mapper.PhotoMapper;
 import com.jbj.service.BuildService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 public class BuildServiceImpl implements BuildService {
@@ -59,7 +66,6 @@ public class BuildServiceImpl implements BuildService {
     public int saveBuild(Build build) {
         //根据城市查询出楼盘
         List<String> list = buildMapper.selectBuildNameByCity(build.getbCity());
-
         if(list.size() == 0){
             //还没有这个城市的，可以进行保存。
             int a=buildMapper.saveBuild(build);
@@ -97,8 +103,71 @@ public class BuildServiceImpl implements BuildService {
         return false;
     }
 
+    /**
+     * 查询id和城市根据楼盘名。保存图片，楼盘和城市的下拉列表
+     * @param bName
+     * @return
+     */
     public List<Map<String, Object>> queryBIdAndBCityByBName(String bName) {
         List<Map<String, Object>> list = buildMapper.selectBIdAndBCity(bName);
         return list;
+    }
+
+    /**
+     * 楼盘补拍列表
+     * @param flag
+     * @return
+     */
+    @Autowired
+    ListOfMapper listOfMapper;
+    @Autowired
+    PhotoMapper photoMapper;
+    public List<Map<String, Object>> FillPhotoType() {
+            //查询出补拍的原因。
+            List<Map<String, Object>> list = listOfMapper.selectListTypes();
+            return list;
+    }
+
+    /**
+     * 修改补拍原因，补拍列表+1
+     * @param lId  补拍原因id
+     * @param bId  楼盘id
+     * @return
+     */
+    public int updateBuildFillType(Integer lId,Integer bId) {
+       if(!"".equals(lId) && (!"".equals(bId)) && !(lId == null) && !(bId == null)){
+            //1:修改楼盘中楼盘的补拍原因
+           int i = buildMapper.updateBuildFillType(lId, bId);
+            //列表中补拍列表 +1.
+           int i1 = listOfMapper.updateListOf(lId);
+           if(i>0 && i1>0){
+               return 1;
+           }else {
+               return -1;
+           }
+       }else {
+           return -1;
+       }
+    }
+
+    /**
+     * 开始补拍。保存的照片的类型是补拍的。然后累加。
+     * @return
+     */
+
+    public int updateFillPhotos(Integer bId, Photo photo) {
+        Build build = buildMapper.selectBuildById(bId);
+        if(build.getbFillType() == null){
+            photo.setpIsFill(BaseEnum.ISFILL);
+        }else{
+            photo.setpIsFill(BaseEnum.ISNOTFILL);
+        }
+        int bFillPhotos = photoMapper.savePhoto(photo);
+        Integer integer = build.getbFillPhotos();
+        int photos=integer.intValue();
+        photos++;
+
+        int i = buildMapper.updatePhotos(photos,bId);
+        return i;
     }
 }
